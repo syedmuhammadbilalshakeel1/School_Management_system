@@ -61,7 +61,7 @@ The School Mana gement System will cover the entire lifecycle of student and tea
 ## 4.1 Desktop Application
 •	The School Management System is designed as a desktop application, limiting accessibility to users with the installed software.
 ## 4.2 System Compatibility
-•	The system is compatible with Windows and operating systems.
+•	The system is compatible with Windows operating systems.
 
 # 5. Conclusion
 The School Management System aims to provide a comprehensive solution for school administrators and students, streamlining various processes through a secure and efficient desktop application. The utilization of MySQL as the database ensures data integrity and reliability. The application's features cover student and teacher management, fee reporting, attendance tracking, and result management, contributing to the effective functioning of educational institutions.
