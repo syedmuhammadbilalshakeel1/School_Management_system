@@ -7,6 +7,32 @@ The purpose of the School Management System (SMS) is to provide a robust and eff
 ## 1.2 Scope
 The School Mana gement System will cover the entire lifecycle of student and teacher data, fee reporting, attendance tracking, and result management. The application will consist of two landing pages, one for administrators and another for students, both accessed through a secure login system.
 
+ ## 1.3Problem Statement: School Management System
+
+Educational institutions, particularly schools, face challenges in efficiently managing and organizing various administrative tasks. The absence of a centralized system often leads to manual errors, inefficiencies, and difficulties in maintaining accurate records. To address these issues, there is a critical need for a comprehensive School Management System (SMS).
+
+## Challenges:
+
+Student and Teacher Management: Current systems lack a unified platform for administrators to easily add, update, or delete student and teacher records. Manual record-keeping can lead to inaccuracies and delays in information retrieval.
+
+Fee Reporting: The absence of an automated fee reporting system results in challenges tracking fees paid and outstanding amounts. This can lead to financial discrepancies and difficulties in financial planning.
+
+Attendance Tracking: Manual attendance management is prone to errors and consumes valuable time. An efficient system is required to streamline the process of recording, updating, and retrieving attendance data.
+
+Result Management: The lack of a centralized system for managing student exam records poses challenges in recording, updating, and retrieving results promptly. This can hinder timely academic feedback to students and parents.
+
+Data Security: Current systems may not prioritize robust data security measures, risking the integrity and confidentiality of student and teacher information. A secure system is essential to protect sensitive data.
+
+User Accessibility: The absence of a user-friendly interface for both administrators and students complicates the use of existing systems. A solution that prioritizes usability is essential for widespread adoption and effectiveness.
+
+## Solution: School Management System
+
+The proposed School Management System is a desktop application designed to address the aforementioned challenges. By incorporating functionalities such as student and teacher management, fee reporting, attendance tracking, and result management, the system aims to streamline administrative processes within educational institutions.
+
+Utilizing MySQL as the database management system ensures the secure storage and retrieval of records. The system provides distinct landing pages for administrators and students, each with a secure login mechanism. The solution offers a user-friendly interface, enabling efficient data entry and retrieval.
+
+The School Management System seeks to enhance the overall efficiency, accuracy, and security of school administration, contributing to a more streamlined and organized educational environment.
+
 # 2. Functional Requirements
 
 ## 2.1 Admin Module
