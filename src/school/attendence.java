@@ -7,9 +7,12 @@ package school;
 
 import java.sql.ResultSet;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -69,7 +72,6 @@ public class attendence extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         Id = new javax.swing.JTextField();
         Name = new javax.swing.JTextField();
         DateBox = new com.toedter.calendar.JDateChooser();
@@ -85,6 +87,7 @@ public class attendence extends javax.swing.JFrame {
         ClassBox = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
         Label_Print = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1550, 900));
@@ -130,13 +133,8 @@ public class attendence extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Attendence");
+        jLabel6.setText("Status");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 580, 120, 40));
-
-        jLabel7.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("ID");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 120, 40));
 
         Id.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Id.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +152,7 @@ public class attendence extends javax.swing.JFrame {
 
         statusBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         statusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Present", "Absent", " " }));
-        jPanel1.add(statusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 290, 40));
+        jPanel1.add(statusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 580, 130, 40));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -192,7 +190,7 @@ public class attendence extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 680, 140, 50));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 680, 140, 50));
 
         jLabel10.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -213,7 +211,7 @@ public class attendence extends javax.swing.JFrame {
         jPanel1.add(searchBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 170, 200, 40));
 
         ClassBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ClassBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matric", "9th", "8th", "7th", "6th", "5th", "4th", "3rd", "2nd", "1st", "kg2", "kg1", "kg", " " }));
+        ClassBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Matric", "9th", "8th", "7th", "6th", "5th", "4th", "3rd", "2nd", "1st", "kg2", "kg1", "kg", " " }));
         jPanel1.add(ClassBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, 290, 40));
 
         jButton4.setBackground(java.awt.Color.cyan);
@@ -238,6 +236,11 @@ public class attendence extends javax.swing.JFrame {
         });
         jPanel1.add(Label_Print, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 150, 130, 60));
 
+        jLabel12.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("ID");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 120, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,14 +258,47 @@ public class attendence extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-                SimpleDateFormat sdf = new SimpleDateFormat();   
-                String Date = sdf.format(DateBox.getDate());        
+     
+        
+                // Input date in mm/dd/yyyy format
+        String inputDateStr;
+//                SimpleDateFormat sdf = new SimpleDateFormat();
+
+        // Specify the input date format
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy");
+        inputDateStr = inputFormat.format(DateBox.getDate());        
+        // Specify the desired output date format
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd");
+        
+        try {
+            // Parse the input date string to Date object
+            Date inputDate = inputFormat.parse(inputDateStr);
+
+            // Format the Date object to the desired output format
+            inputDateStr = outputFormat.format(inputDate);
+
+            // Print the result
+            System.out.println("Input Date: " + inputDateStr);
+            System.out.println("Formatted Date: " + inputDateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+        
+        
+        
+             
+        
+//                SimpleDateFormat sdf = new SimpleDateFormat();
+//                String Date = sdf.format(DateBox.getDate());        
                 String Class= ClassBox.getSelectedItem().toString();  
                 String Status= statusBox.getSelectedItem().toString();
-                
+                System.out.println("date"+inputDateStr);
               try {
             Sacred s = new Sacred();
-            s.attendence(Id.getText(), Name.getText(), Class, Date, Status);
+            s.attendence(Id.getText(), Name.getText(), Class, inputDateStr, Status);
             
             JOptionPane.showMessageDialog(this, "Data Inserted Successfully");
             Id.setText("");
@@ -273,7 +309,7 @@ public class attendence extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+//         TODO add your handling code here:
         attendenceSearch as = new attendenceSearch();
         as.setVisible(true);
         dispose();
@@ -364,11 +400,11 @@ public class attendence extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

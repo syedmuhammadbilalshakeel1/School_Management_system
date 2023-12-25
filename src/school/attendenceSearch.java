@@ -48,7 +48,9 @@ public class attendenceSearch extends javax.swing.JFrame {
         Update = new javax.swing.JButton();
         Update2 = new javax.swing.JButton();
         Back = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        Select_btn = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        sDate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -116,8 +118,8 @@ public class attendenceSearch extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("ID");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, 130, 43));
+        jLabel6.setText("Date");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 130, 43));
 
         jLabel7.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,15 +169,28 @@ public class attendenceSearch extends javax.swing.JFrame {
         });
         jPanel1.add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 640, 160, 50));
 
-        jButton1.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        jButton1.setText("Select");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Select_btn.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        Select_btn.setText("Select");
+        Select_btn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        Select_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                Select_btnActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 267, 130, 40));
+        jPanel1.add(Select_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 267, 130, 40));
+
+        jLabel10.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("ID");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, 130, 43));
+
+        sDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        sDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sDateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 220, 290, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 900));
 
@@ -209,12 +224,13 @@ public class attendenceSearch extends javax.swing.JFrame {
         int opt = JOptionPane.showConfirmDialog(null, "Are You Sure To Delet", "Delet", JOptionPane.YES_NO_OPTION);
         if(opt == 0){
         try {
-            s.attendenceDelet(Id.getText());
+            s.attendenceDelet(Id.getText(), sDate.getText());
             Id.setText("");
             Name.setText("");
             Class.setText("");
             Date.setText("");
             Status.setText("");
+            sDate.setText("");
             JOptionPane.showMessageDialog(this, "Data Deleted Successfully");
         } catch (Exception e) {
             System.out.println(e);
@@ -226,12 +242,20 @@ public class attendenceSearch extends javax.swing.JFrame {
         // TODO add your handling code here:
         Sacred s = new Sacred();
         try {
-            s.AttendenceUpdate(Id.getText(), Name.getText(), Class.getText(), Date.getText(), Status.getText());
+            s.AttendenceUpdate(
+                    Id.getText(),
+                    Name.getText(),
+                    Class.getText(),
+                    Date.getText(),
+                    Status.getText(),
+                   sDate.getText()
+            );
             Id.setText("");
             Name.setText("");
             Class.setText("");
             Date.setText("");
             Status.setText("");
+            sDate.setText("");
             JOptionPane.showMessageDialog(this, "Data Updated Successfully");
         } catch (Exception e) {
             System.out.println("Error in attendence update botton"+e);
@@ -245,24 +269,30 @@ public class attendenceSearch extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_BackActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void Select_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Select_btnActionPerformed
         // TODO add your handling code here:
         Sacred s = new Sacred();
-        
-        ResultSet rs = s.getAttendenceById((Id.getText()));
         try {
-            rs.next();
-            //SID.setText(rs.getString("ID"));
+            ResultSet rs = s.displayAttendence1(Id.getText(), sDate.getText());
+            if(rs.next()){
             Name.setText(rs.getString("Name"));
             Class.setText(rs.getString("Class"));
             Date.setText(rs.getString("Date"));
             Status.setText(rs.getString("Status"));
+            }else
+            {
+            JOptionPane.showMessageDialog(this, "Record not found");
+            Id.setText("");
+            sDate.setText("");
+            }
         } catch (Exception e) {
             System.out.println("Error in select attendence boton"+e);
-        }
-        
-       
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }       
+    }//GEN-LAST:event_Select_btnActionPerformed
+
+    private void sDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sDateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,11 +335,12 @@ public class attendenceSearch extends javax.swing.JFrame {
     private javax.swing.JTextField Date;
     private javax.swing.JTextField Id;
     private javax.swing.JTextField Name;
+    private javax.swing.JButton Select_btn;
     private javax.swing.JTextField Status;
     private javax.swing.JButton Update;
     private javax.swing.JButton Update2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -319,5 +350,6 @@ public class attendenceSearch extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField sDate;
     // End of variables declaration//GEN-END:variables
 }
