@@ -1,3 +1,10 @@
+# Building an Efficient School Management System in Java: Step-by-Step Guide
+   1.  https://youtu.be/GWDHAJbRYLg?feature=shared
+   2.  https://youtu.be/GWDHAJbRYLg?feature=shared  
+     
+
+
+
 # School_Managment_system
 
 # 1. Introduction
