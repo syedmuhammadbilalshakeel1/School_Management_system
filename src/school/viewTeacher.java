@@ -32,7 +32,17 @@ public class viewTeacher extends javax.swing.JFrame {
       try{
       while(rs.next()){
           
-          String []data={rs.getString("SNO"), rs.getString("Name"),rs.getString("Specialization"),rs.getString("Email"),rs.getString("Phone"),rs.getString("Salary"),rs.getString("Address"),rs.getString("Date"),rs.getString("Gender")};
+          String []data={
+              rs.getString("SNO"),
+              rs.getString("Name"),
+              rs.getString("Specialization"),
+              rs.getString("Email"),
+              rs.getString("Phone"),
+              rs.getString("Salary"),
+              rs.getString("Address"),
+              rs.getString("Date"),
+              rs.getString("Gender")
+          };
         tb.addRow(data);
       }
       }catch(Exception e){

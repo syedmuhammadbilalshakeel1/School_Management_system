@@ -22,14 +22,24 @@ public class viewStudent extends javax.swing.JFrame {
     public viewStudent() {
         initComponents();
         ResultSet rs; 
-      Sacred db=new Sacred();
-      rs=db.displayStudentsRecords();
-      DefaultTableModel tb=(DefaultTableModel)jTable1.getModel();
+        Sacred db=new Sacred();
+        rs=db.displayStudentsRecords();
+        DefaultTableModel tb=(DefaultTableModel)jTable1.getModel();
       
       try{
       while(rs.next()){
           
-          String []data={rs.getString("ID"),rs.getString("Name"),rs.getString("F_Name"),rs.getString("Class"),rs.getString("Phone"),rs.getString("Address"),rs.getString("Date"),rs.getString("Gender")};
+          String []data={
+              rs.getString("ID"),
+              rs.getString("Name"),
+              rs.getString("F_Name"),
+              rs.getString("Class"),
+              rs.getString("Phone"),
+              rs.getString("Address"),
+              rs.getString("Date"),
+              rs.getString("Gender"),
+              rs.getString("stPassword")
+          };
         tb.addRow(data);
       }
       }catch(Exception e){
@@ -38,14 +48,18 @@ public class viewStudent extends javax.swing.JFrame {
       }
       //Sacred s = new Sacred();
         rs = db.countStudents();
+        
         try {
             if(rs.next()){
             String sum = rs.getString("count(ID)");
+//            String n = rs.getString("ID");
             counter.setText(sum);
+                System.out.println(sum);
             }
         } catch (Exception e) {
             System.out.println("Error in student counter"+e);
         }
+       
     }
     
     class classSearch{
@@ -94,10 +108,10 @@ public class viewStudent extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Father Name", "Class", "Phone NO.", "Address", "Date", "Gender"
+                "ID", "Name", "Father Name", "Class", "Phone NO.", "Address", "Date", "Gender", "Pass"
             }
         ));
         jTable1.setGridColor(new java.awt.Color(255, 0, 51));

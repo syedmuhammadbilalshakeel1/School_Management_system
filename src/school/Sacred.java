@@ -7,11 +7,11 @@ package school;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import static jdk.nashorn.internal.runtime.Debug.id;
 
 public class Sacred {
 private Connection con;
@@ -56,16 +56,32 @@ public ResultSet getStudentLogin (String user, String pass){
     return rs;
 }
 
-
-public ResultSet getStudentRecord (String user){
-    try {
-        String query = "select * from allstudents where ID = '"+user+"'";
-        rs = st.executeQuery(query);
-    } catch (SQLException e) {
-        System.out.println(e);
+public ResultSet getStudentRecord(String user, String pass){
+    
+        String query = "select * from allstudents where ID = '"+user+"' and stPassword  ='"+pass+"'";
+        
+        try {
+            rs = st.executeQuery(query);
+            return rs;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
-    return rs;
-}
+
+public ResultSet getExamRecord(String user){
+    
+        String query = "select * from result where ID = '"+user+"'";
+        
+        try {
+            rs = st.executeQuery(query);
+            return rs;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
 //============================End==>StudentLogging======================================================
 
 //============================Starting==>InsertStudentData=======================================
@@ -111,9 +127,9 @@ public void insert(String Sname, String Sfathername, String Sid, String getClass
         return null;
     }   
  //==================================== 
-public void studentUpdate(String id, String sName, String Fname,String sClass, String sPhone, String sDate, String sAddress, String Gender){
+public void studentUpdate(String id, String sName, String Fname,String sClass, String sPhone, String sDate, String sAddress, String Gender, String pass){
         
-String query = "update allstudents set ID = '"+id+"', Name = '"+sName+"', F_Name = '"+Fname+"', Class = '"+sClass+"', Phone = '"+sPhone+"', Address = '"+sAddress+"', Date = '"+sDate+"', Gender = '"+Gender+"' where ID = '"+id+"'";
+String query = "update allstudents set ID = '"+id+"', Name = '"+sName+"', F_Name = '"+Fname+"', Class = '"+sClass+"', Phone = '"+sPhone+"', Address = '"+sAddress+"', Date = '"+sDate+"', Gender = '"+Gender+"', stPassword = '"+pass+"' where ID = '"+id+"'";
     System.out.println(query);
 try {
         st.execute(query);
@@ -307,6 +323,18 @@ public void insertFee(String id, String name, String Fname, String ClassBox, Str
         }
         return rs;
     }
+    
+        public ResultSet displayFeeChart(String userId){
+        
+        String sql="select * from fees where ID = '"+userId+"'";
+        try{
+        rs=st.executeQuery(sql);
+        
+        }catch(Exception e){
+        System.out.println("Error in displayingFee function"+e);
+        }
+        return rs;
+    }
 //============================End==>DisplayingFee===========================================================
     
 //============================Starting==>updateFee=======================================================
@@ -376,6 +404,18 @@ public void attendence(String ID, String Name, String Class, String Date, String
     
         return rs;
     }
+    public ResultSet displayAttendence1(String id, String date){
+        
+        String sql="select * from attendence where ID = '"+id+"' and Date = '"+date+"'";
+        try{
+        rs=st.executeQuery(sql);
+        
+        }catch(Exception e){
+        System.out.println("Error in DisplayingAttendence Record"+e);
+        }
+    
+        return rs;
+    }
 //============================End==>displayAttendence============================================================
 
 //============================Starting==>updateAttendence=======================================================
@@ -391,9 +431,9 @@ public void attendence(String ID, String Name, String Class, String Date, String
         return null;
     }   
 // ==================================== 
-public void AttendenceUpdate(String Id,String Name, String Class, String Date,String Status){
+public void AttendenceUpdate(String Id,String Name, String Class, String Date,String Status, String dateForUpdate){
         
-String query = "update attendence set ID = '"+Id+"',Name = '"+Name+"', Class = '"+Class+"', Date = '"+Date+"', Status = '"+Status+"' where ID = '"+Id+"'";
+String query = "update attendence set ID = '"+Id+"',Name = '"+Name+"', Class = '"+Class+"', Date = '"+Date+"', Status = '"+Status+"' where ID = '"+Id+"' and Date = '"+dateForUpdate+"'";
     //System.out.println(query);
 try {
         st.execute(query);
@@ -405,11 +445,11 @@ try {
 //============================End==>updateAttendence===========================================================
 
 //============================Starting==>DeletAttendence===========================================================
-public void attendenceDelet(String Id){
+public void attendenceDelet(String Id, String datefordelete){
             
     try {
         
-        String query = "DELETE FROM `attendence` WHERE ID = '"+Id+"'";    
+        String query = "DELETE FROM `attendence` WHERE ID = '"+Id+"' and Date = '"+datefordelete+"'";    
         st.executeUpdate(query);
         
     } catch (Exception e) {
@@ -443,9 +483,19 @@ public ResultSet countTeachers(){
         return rs;
 }
 //============================Ending==>TeacherCount++++===========================================================
-
+public ResultSet attendenceGraph(String userId){
+        try {
+//        String Sql1;
+//            Sql1 = "SELECT MONTH(Date) AS Month, COUNT(*) AS AttendanceCount FROM attendence  WHERE ID = 'csc-21f-037' AND MONTH(Date) = '12'  GROUP BY MONTH(Date)";
+        String sql = "SELECT MONTH(Date) AS Month, COUNT(*) AS PresentCount  FROM attendence WHERE ID = '"+userId+"' AND Status = 'Present' GROUP BY MONTH(Date)";
+        rs = st.executeQuery(sql);
+        }catch(SQLException e){
+            System.out.println("Error in sacred attendenceGraph function"+e);
+        }
+        return rs;
+}
 public static void main(String[] args) {
-        Sacred m = new Sacred();
+        
     }
 
     Sacred insert(String text, String text0, String text1, String text2, String text3, String daate, String gender) {

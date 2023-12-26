@@ -6,7 +6,9 @@
 package school;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,35 +20,38 @@ public class StudentDashboard extends javax.swing.JFrame {
     /**
      * Creates new form StudentDashboard
      */
-          Sacred db=new Sacred();
-
-    public ResultSet getstatus(String user){
-        ResultSet status;
-        status = db.getStudentRecord(user);
-        return status;
-    }
     public StudentDashboard() {
-        initComponents();
-//        for personal Details
-        
+                initComponents();
+                nic n = new nic();
+                ResultSet rs1 = n.rs;
+                n.processResultSet(rs1);
+    }
+
+    class nic{
         ResultSet rs;
-      rs=db.displayStudentsRecords();
-      DefaultTableModel tb=(DefaultTableModel)sPersonalRecordTable.getModel();
-      
+     public void processResultSet(ResultSet rs) {
+         
+        DefaultTableModel tb=(DefaultTableModel)jTable1.getModel();
       try{
       while(rs.next()){
-          
-          String []data={rs.getString("ID"),rs.getString("Name"),rs.getString("F_Name"),rs.getString("Class"),rs.getString("Phone"),rs.getString("Address"),rs.getString("Date"),rs.getString("Gender")};
+              String []data={
+              rs.getString("ID"),
+              rs.getString("Name"),
+              rs.getString("F_Name"),
+              rs.getString("Class"),
+              rs.getString("Phone"),
+              rs.getString("Address"),
+              rs.getString("Date"),
+              rs.getString("Gender")
+          };
+          System.out.println("rs kay inder id "+rs.getString("Name"));
         tb.addRow(data);
       }
-      }catch(Exception e){
-          JOptionPane.showMessageDialog(this, "Connect to DB first"+e);
-      }
-//      for Exam details
-      
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
-   
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,6 +74,7 @@ public class StudentDashboard extends javax.swing.JFrame {
         examDetails1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        buttonRecord = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1550, 900));
@@ -151,11 +157,51 @@ public class StudentDashboard extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 520, 1430, 170));
 
+        buttonRecord.setText("ClickME");
+        buttonRecord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRecordActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonRecord, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 200, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 1760, 750));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    ResultSet id;
+    public void test(ResultSet id){
+        this.id = id;
+    }
+    
+    private void buttonRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRecordActionPerformed
+        // TODO add your handling code here:
+//        ResultSet rs; 
+//        Sacred db=new Sacred();
+////        id=db.displayStudentsRecords();
+//        DefaultTableModel tb=(DefaultTableModel)jTable1.getModel();
+//        System.out.println("ayaaa "+id);
+//      try{
+//      while(id.next()){
+//          String []data={
+//              id.getString("ID"),
+//              id.getString("Name"),
+//              id.getString("F_Name"),
+//              id.getString("Class"),
+//              id.getString("Phone"),
+//              id.getString("Address"),
+//              id.getString("Date"),
+//              id.getString("Gender")
+//          };
+//        tb.addRow(data);
+//      }
+//      }catch(Exception e){
+//      
+//          JOptionPane.showMessageDialog(this, "Connect to DB first"+e);
+//      }    
+
+    }//GEN-LAST:event_buttonRecordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +242,7 @@ public class StudentDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addStudent;
     private javax.swing.JLabel attendenceRecord;
+    private javax.swing.JButton buttonRecord;
     private javax.swing.JLabel examDetails1;
     private javax.swing.JTable examRecordTable;
     private javax.swing.JLabel jLabel2;

@@ -58,9 +58,10 @@ public class studentSearch extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btn_male = new javax.swing.JRadioButton();
         btn_female = new javax.swing.JRadioButton();
+        sPass = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1550, 900));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -103,8 +104,8 @@ public class studentSearch extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Address");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 590, 130, 43));
+        jLabel10.setText("Password");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 670, 130, 43));
 
         jLabel17.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -145,7 +146,7 @@ public class studentSearch extends javax.swing.JFrame {
 
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("__________________________________________________________________________________________________");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 690, 700, -1));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 700, 700, -1));
 
         sAddress.setColumns(20);
         sAddress.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -226,6 +227,19 @@ public class studentSearch extends javax.swing.JFrame {
         });
         jPanel1.add(btn_female, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 530, 130, -1));
 
+        sPass.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        sPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sPassActionPerformed(evt);
+            }
+        });
+        jPanel1.add(sPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 670, 320, 30));
+
+        jLabel11.setFont(new java.awt.Font("Calisto MT", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Address");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 590, 130, 43));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,6 +269,7 @@ public class studentSearch extends javax.swing.JFrame {
             sPhone.setText("");
             sDate.setText("");
             sAddress.setText("");
+            sPass.setText("");
             JOptionPane.showMessageDialog(this, "Data Deleted Successfully");
         } catch (Exception e) {
             System.out.println(e);
@@ -279,7 +294,7 @@ public class studentSearch extends javax.swing.JFrame {
         Gender = "Female";
         }
         try {
-            s.studentUpdate(id.getText(), Sname.getText(), Fname.getText(), sClass.getText(), sPhone.getText(), sDate.getText(), sAddress.getText(), Gender);
+            s.studentUpdate(id.getText(), Sname.getText(), Fname.getText(), sClass.getText(), sPhone.getText(), sDate.getText(), sAddress.getText(), Gender, sPass.getText());
             id.setText("");
             Sname.setText("");
             Fname.setText("");
@@ -287,6 +302,7 @@ public class studentSearch extends javax.swing.JFrame {
             sPhone.setText("");
             sDate.setText("");
             sAddress.setText("");
+            sPass.setText("");
             JOptionPane.showMessageDialog(this, "Data Updated Successfully");
         } catch (Exception e) {
             System.out.println(e);
@@ -331,6 +347,7 @@ public class studentSearch extends javax.swing.JFrame {
             else{
             //rs.next();
             //SID.setText(rs.getString("ID"));
+            sPass.setText(rs.getString("stPassword"));
             Sname.setText(rs.getString("Name"));
             Fname.setText(rs.getString("F_Name"));
             sClass.setText(rs.getString("Class"));
@@ -353,6 +370,10 @@ public class studentSearch extends javax.swing.JFrame {
     private void btn_femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_femaleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_femaleActionPerformed
+
+    private void sPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,6 +423,7 @@ public class studentSearch extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -416,6 +438,7 @@ public class studentSearch extends javax.swing.JFrame {
     private javax.swing.JTextArea sAddress;
     private javax.swing.JTextField sClass;
     private javax.swing.JTextField sDate;
+    private javax.swing.JTextField sPass;
     private javax.swing.JTextField sPhone;
     // End of variables declaration//GEN-END:variables
 }
